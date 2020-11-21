@@ -19,8 +19,13 @@ if ($context == "country"){
 }
 
 elseif($context == "city"){
-  $stmt = $conn->prepare("SELECT cities.name,cities.district, cities.population FROM cities JOIN countries WHERE countries.name LIKE CONCAT('%',:country,'%') AND cities.country_code = countries.code");
-  $stmt->bindParam(':country',$country);
+  $stmt1 = $conn->prepare("SELECT DISTINCT code FROM countries WHERE name LIKE CONCAT('%',:country,'%')");
+  $stmt1->bindParam(':country',$country);
+  $stmt1->execute();
+  $temp = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+  $hold = $temp[0]["code"];
+  $stmt = $conn->prepare("SELECT name, district, population FROM cities WHERE country_code = ?");
+  $stmt->bindValue(1,$hold);
   $flag = 2;
 }
 
