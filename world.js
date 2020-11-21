@@ -1,5 +1,6 @@
 window.onload = function(){
     var button = document.querySelector("#lookup");
+    var button1 = document.querySelector("#lookup1");
     var httpRequest;
     console.log("here");
     button.addEventListener('click',function(element){
